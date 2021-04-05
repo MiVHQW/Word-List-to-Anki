@@ -7,6 +7,7 @@ By importing this file, Anki creates one note (card) per word.
 
 The card consists of two sides: The word on one side and the meaning(s) on the other side of the card.
 
+The source for the meanings is the Duden.
 # Usage
 
 1. Alter the file _words.txt_ in the root directory and **insert your words**. Insert **one word per line**.

@@ -1,6 +1,6 @@
 import re
 
-from duden_word_fetcher import Word
+from Word_Class import Word
 
 
 def txt_to_search_string_list(path):

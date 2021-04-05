@@ -22,9 +22,9 @@ def word_string_to_word_object(word_string):
 
 # read txt and create word string list
 word_string_list = txt_to_search_string_list(
-    r"words.txt")
-ok_list_path = "export_words.txt"
-error_list_path = "error_words.txt"
+    r"Input/words.txt")
+ok_list_path = "Output/export_words.txt"
+error_list_path = "Output/error_words.txt"
 export_words = ""
 error_words = ""
 

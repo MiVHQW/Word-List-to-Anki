@@ -10,12 +10,13 @@ The card consists of two sides: The word on one side and the meaning(s) on the o
 The source for the meanings is the Duden.
 # Usage
 
-1. Alter the file _words.txt_ in the root directory and **insert your words**. Insert **one word per line**.
+1. Alter the file _words.txt_ in the Input directory and **insert your words**. Insert **one word per line**.
 
 2. **Execute** _word_list_to_anki.py_.
 
-3. You find your exportable file as _export_words.txt_ in the root directory. You can import this file as a tab
-   separated text file into Anki.
+3. You find your exportable file as _export_words.txt_ in the Output directory. You can import this file as a tab
+   separated text file into Anki. Words that could not be found in the duden will be saved in _error_words.txt_ in the
+   Output directory.
 
 # Example
 
@@ -31,7 +32,7 @@ Kontrafaktur
 ```
 
 * Then you execute _word_list_to_anki.py_ and find the file _export_words.txt_
-  in your root directory.
+  in your Output directory.
 
 * You can import this file as a tab separated text file into Anki.
 

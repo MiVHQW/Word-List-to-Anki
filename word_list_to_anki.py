@@ -1,4 +1,5 @@
 import re
+import time
 
 from Word_Class import Word
 
@@ -56,3 +57,5 @@ with open(ok_list_path, "w", encoding="utf8") as f:
 # write error file
 with open(error_list_path, "w", encoding="utf8") as f:
     f.write(error_words)
+
+input("")

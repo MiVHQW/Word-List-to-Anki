@@ -1,5 +1,4 @@
 import re
-import time
 
 from Word_Class import Word
 

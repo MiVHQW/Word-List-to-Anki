@@ -14,7 +14,7 @@ The source for the meanings is the Duden.
 
 2. **Execute** _word_list_to_anki.py_.
 
-3. You find your exportable file as _export_words.txt_ in the Output directory. You can import this file as a tab
+3. You find your exportable file as _export_words.txt_ in the Output directory. You can **import** this file as a tab
    separated text file into Anki. Words that could not be found in the duden will be saved in _error_words.txt_ in the
    Output directory.
 

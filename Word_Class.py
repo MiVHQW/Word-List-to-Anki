@@ -24,7 +24,7 @@ class Word:
 
     def decorator_func(self, meaning, submeaning=False):
         def printer(multiplier):
-            print(meaning, end="\n" * multiplier)
+            print(meaning, end="<br>" * multiplier)
 
         if submeaning == False:
             printer(2)
@@ -58,11 +58,11 @@ class Word:
             for meaning in self.word.meaning_overview:
                 if type(meaning) == str:  # when normal string, just print
 
-                    export_string += (meaning + "\n")
+                    export_string += (meaning + "<br>")
 
                 elif type(meaning) == list:  # a list in itself, so iterate again
                     for submeaning in meaning:
-                        export_string += submeaning
+                        export_string += submeaning + "<br>"
 
                 else:
                     raise TypeError("Unknown Type")

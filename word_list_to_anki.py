@@ -48,8 +48,6 @@ for word_string in word_string_list:
 
 # remove newlines before " in the ok words string
 export_words = re.sub('\n"', '"', export_words)
-export_words = re.sub('\n', '<br>', export_words)  # when HTML is enabled on import in Anki, this ensures correct
-# line breakes in the cards
 
 # write export file
 with open(ok_list_path, "w", encoding="utf8") as f:

@@ -54,6 +54,11 @@ class Word:
         """Generates a string with the title separated by tab from the meaning"""
         export_string = ""
 
+        def remove_trailing_str(trailing_chars: str, base_string: str):
+            index_of_right_string = base_string.rfind(trailing_chars)
+            without = base_string[:index_of_right_string]
+            return without
+
         if type(self.word.meaning_overview) == list:  # several meanings
             for meaning in self.word.meaning_overview:
                 if type(meaning) == str:  # when normal string, just print
@@ -73,7 +78,12 @@ class Word:
         # remove tabs in meaning in order to not confuse anki
         # on import
         export_string = re.sub("\t", "", export_string)
-        return self.word.title + "\t" + '"' + export_string + '"'
+
+        # remove trailing whitespace
+        export_string = remove_trailing_str("<br>", export_string)
+
+        result = self.word.title + "\t" + '"' + export_string + '"'
+        return result
 
     def print_synonyms(self):
         try:

@@ -56,7 +56,12 @@ class Word:
 
         def remove_trailing_str(trailing_chars: str, base_string: str):
             index_of_right_string = base_string.rfind(trailing_chars)
-            without = base_string[:index_of_right_string]
+
+            if index_of_right_string == -1:
+                without = base_string
+            else:
+                without = base_string[:index_of_right_string]
+
             return without
 
         if type(self.word.meaning_overview) == list:  # several meanings

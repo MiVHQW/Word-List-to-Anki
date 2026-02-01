@@ -37,11 +37,20 @@ class Word:
 
     @staticmethod
     def remove_trailing_str(trailing_chars: str, base_string: str):
+
         index_of_right_string = base_string.rfind(trailing_chars)
         if index_of_right_string == len(base_string) - len(trailing_chars):
             result = base_string[:index_of_right_string]
         else:
             result = base_string
+
+        return result
+
+    def remove_herkunft(self, input_string: str):
+        index_of_right_string = input_string.rfind("Herkunft")
+        result = input_string[:index_of_right_string]
+        result = self.remove_trailing_str("<br>", result)
+        result = self.remove_trailing_str("\n", result)
 
         return result
 
@@ -64,6 +73,9 @@ class Word:
 
         if type(self.word.meaning_overview) == str:  # one meaning
             export_string += self.word.meaning_overview
+
+        # remove herkunft
+        export_string = self.remove_herkunft(export_string)
 
         # add examples
         examples = self.word.examples

@@ -1,5 +1,6 @@
-import duden
 import re
+
+import duden
 
 
 class Word:
@@ -22,33 +23,14 @@ class Word:
         self.word_string = word_string
         self.word = duden.get(word_to_url_friendly_word(word_string))
 
-    def decorator_func(self, meaning, submeaning=False):
-        def printer(multiplier):
-            print(meaning, end="<br>" * multiplier)
+    @staticmethod
+    def hide_word_in_text(self, word: str, text: str):
+        """Replaces all occurences of 'word' in text with '~'."""
 
-        if submeaning == False:
-            printer(2)
+        replacement = "~"
+        result_text = text.replace(word, replacement)
 
-        if submeaning:
-            printer(1)
-
-    def print_for_anki(self):
-        """prints word and meaning with separation"""
-        print(self.word.title, "\n")
-
-        if type(self.word.meaning_overview) == list:  # several meanings
-            for meaning in self.word.meaning_overview:
-                if type(meaning) == str:  # when normal string, just print
-
-                    self.decorator_func(meaning)
-                elif type(meaning) == list:  # a list in itself, so iterate again
-                    for submeaning in meaning:
-                        self.decorator_func(submeaning, submeaning=True)
-                else:
-                    raise TypeError("Unknown Type")
-
-        if type(self.word.meaning_overview) == str:  # one meaning
-            self.decorator_func(self.word.meaning_overview)
+        return result_text
 
     def export_string_for_anki(self):
         """Generates a string with the title separated by tab from the meaning"""

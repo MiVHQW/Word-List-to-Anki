@@ -15,7 +15,7 @@ class WordFactory:
         self.error_words = ""
 
     @staticmethod
-    def txt_to_search_string_list(path):
+    def txt_file_to_string_list(path):
         """
         Reads a txt file with one search string per line and
         creates a python list
@@ -32,36 +32,27 @@ class WordFactory:
         """Creates word objects from strings"""
         return Word(word_string)
 
-    def create_word_string_list(self):
+    def createWordObjectList(self):
         # read txt and create word string list
-        word_string_list = self.txt_to_search_string_list(
+        word_string_list = self.txt_file_to_string_list(
             r"Input/words.txt")
 
         # create word objects
 
         for word_string in word_string_list:
-            self.word_objects.append(self.word_string_to_word_object(word_string))
             try:
-                title = self.word_string_to_word_object(word_string).word.title
-                print(title, ": success", sep="")
-
-                string_to_be_added = self.word_string_to_word_object(word_string).export_string_for_anki()
-
-                # add string
-                self.export_words += (string_to_be_added + "\n")
+                word_object = self.word_string_to_word_object(word_string)
+                self.word_objects.append(self.word_string_to_word_object(word_string))
 
             except:
-                print(self.word_string_to_word_object(word_string).word_string, ": failed", sep="")
-                self.error_words += self.word_string_to_word_object(word_string).word_string
+                print(word_string, ": failed", sep="")
+                self.error_words += word_string + "\n"
+                continue
 
-    def create_word_list(self):
-        """Creates the Anki output file
-        """
-        self.create_word_string_list()
+            title = word_object.word.title
+            print(title, ": success", sep="")
 
-        # remove newlines before " in the ok words string
-        self.export_words = re.sub('\n"', '"', self.export_words)
-
+    def write_to_file(self):
         # write export file
         with open(self.ok_list_path, "w", encoding="utf8") as f:
             f.write(self.export_words)
@@ -72,6 +63,22 @@ class WordFactory:
 
         input("You can close this window now.")
 
+    def create_output_file(self):
+        """Creates the Anki output file
+        """
+        self.createWordObjectList()
+
+        for word_object in self.word_objects:
+            string_to_be_added = word_object.export_string_for_anki()
+
+            # add string
+            self.export_words += (string_to_be_added + "\n")
+
+            # remove newlines before " in the ok words string
+            self.export_words = re.sub('\n"', '"', self.export_words)
+
+        self.write_to_file()
+
 
 my_factory = WordFactory(r"Input/words.txt")
-my_factory.create_word_list()
+my_factory.create_output_file()

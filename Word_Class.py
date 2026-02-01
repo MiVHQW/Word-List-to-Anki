@@ -12,7 +12,12 @@ class Word:
         """
 
         self.word_string = word_string.strip()
+
         self.word = duden.get(self.word_to_url_friendly_word(self.word_string))
+        if self.word:
+            pass
+        else:
+            raise Exception("Word not found in Duden")
 
     def word_to_url_friendly_word(self, word: str):
         string = word.strip()
@@ -26,6 +31,7 @@ class Word:
     def hide_word_in_text(self, text: str):
         """Replaces all occurences of 'word' in text with '~'."""
         replaced1stdegree = False
+        result_text = text
 
         replacement = "~"
         if self.word_string in text:
@@ -91,8 +97,9 @@ class Word:
 
         # add examples
         examples = self.word.examples
-        examples = self.hide_word_in_text(examples)
+
         if examples:
+            examples = self.hide_word_in_text(examples)
             export_string += "<br><br>Beispiel<br>"
             export_string += examples.replace("\n", "<br>")
 

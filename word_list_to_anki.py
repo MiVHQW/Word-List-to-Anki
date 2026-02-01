@@ -42,7 +42,7 @@ class WordFactory:
         for word_string in word_string_list:
             try:
                 word_object = self.word_string_to_word_object(word_string)
-                self.word_objects.append(self.word_string_to_word_object(word_string))
+                self.word_objects.append(word_object)
 
             except:
                 print(word_string, ": failed", sep="")

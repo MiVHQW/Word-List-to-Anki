@@ -45,7 +45,7 @@ class WordFactory:
                 title = self.word_string_to_word_object(word_string).word.title
                 print(title, ": success", sep="")
 
-                string_to_be_added = (self.word_string_to_word_object(word_string).export_string_for_anki())
+                string_to_be_added = self.word_string_to_word_object(word_string).export_string_for_anki()
 
                 # add string
                 self.export_words += (string_to_be_added + "\n")

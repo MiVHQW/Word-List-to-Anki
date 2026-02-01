@@ -22,14 +22,12 @@ class Word:
 
         self.word_string = word_string
         self.word = duden.get(word_to_url_friendly_word(word_string))
-        self.export_string = self.export_string_for_anki()
 
-    @staticmethod
-    def hide_word_in_text(self, word: str, text: str):
+    def hide_word_in_text(self, text: str):
         """Replaces all occurences of 'word' in text with '~'."""
 
         replacement = "~"
-        result_text = text.replace(word, replacement)
+        result_text = text.replace(self.word_string, replacement)
 
         return result_text
 
@@ -40,13 +38,12 @@ class Word:
     @staticmethod
     def remove_trailing_str(trailing_chars: str, base_string: str):
         index_of_right_string = base_string.rfind(trailing_chars)
-
-        if index_of_right_string == -1:
-            without = base_string
+        if index_of_right_string == len(base_string) - len(trailing_chars):
+            result = base_string[:index_of_right_string]
         else:
-            without = base_string[:index_of_right_string]
+            result = base_string
 
-        return without
+        return result
 
     def export_string_for_anki(self):
         """Generates a string with the title separated by tab from the meaning"""
@@ -67,6 +64,13 @@ class Word:
 
         if type(self.word.meaning_overview) == str:  # one meaning
             export_string += self.word.meaning_overview
+
+        # add examples
+        examples = self.word.examples
+        examples = self.hide_word_in_text(examples)
+        if examples:
+            export_string += "<br>Beispiel<br>"
+            export_string += examples.replace("\n", "<br>")
 
         # remove tabs in meaning in order to not confuse anki
         # on import

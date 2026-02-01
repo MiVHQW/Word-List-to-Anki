@@ -25,11 +25,14 @@ class Word:
 
     def hide_word_in_text(self, text: str):
         """Replaces all occurences of 'word' in text with '~'."""
+        replaced1stdegree = False
 
         replacement = "~"
-        result_text = text.replace(self.word_string, replacement)
+        if self.word_string in text:
+            result_text = text.replace(self.word_string, replacement)
+            replaced1stdegree = True
 
-        if self.word_string.endswith("en") and len(self.word_string) > 5:
+        if self.word_string.endswith("en") and len(self.word_string) > 5 and not replaced1stdegree:
             result_text = text.replace(self.word_string[:-2], replacement)
 
         return result_text

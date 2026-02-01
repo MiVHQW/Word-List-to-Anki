@@ -6,28 +6,31 @@ import duden
 class Word:
     """Represents a word from the duden."""
 
-    def __init__(self, word_string):
+    def __init__(self, word_string: str):
         """Instantiates the word and fetches it from the duden.
         :type word_string: str
         """
 
-        def word_to_url_friendly_word(word):
-            string = word.strip()
+        self.word_string = word_string.strip()
+        self.word = duden.get(self.word_to_url_friendly_word(self.word_string))
 
-            replace_dict = {"ä": "ae", "ö": "oe", "ü": "ue", "ß": "sz", "Ä": "Ae", "Ö": "Oe", "Ü": "Ue"}
+    def word_to_url_friendly_word(self, word: str):
+        string = word.strip()
 
-            for k in replace_dict.keys():
-                string = string.replace(k, replace_dict[k])
-            return string
+        replace_dict = {"ä": "ae", "ö": "oe", "ü": "ue", "ß": "sz", "Ä": "Ae", "Ö": "Oe", "Ü": "Ue"}
 
-        self.word_string = word_string
-        self.word = duden.get(word_to_url_friendly_word(word_string))
+        for k in replace_dict.keys():
+            string = string.replace(k, replace_dict[k])
+        return string
 
     def hide_word_in_text(self, text: str):
         """Replaces all occurences of 'word' in text with '~'."""
 
         replacement = "~"
         result_text = text.replace(self.word_string, replacement)
+
+        if self.word_string.endswith("en") and len(self.word_string) > 5:
+            result_text = text.replace(self.word_string[:-2], replacement)
 
         return result_text
 
@@ -48,9 +51,12 @@ class Word:
 
     def remove_herkunft(self, input_string: str):
         index_of_right_string = input_string.rfind("Herkunft")
-        result = input_string[:index_of_right_string]
-        result = self.remove_trailing_str("<br>", result)
-        result = self.remove_trailing_str("\n", result)
+        if index_of_right_string != -1:
+            result = input_string[:index_of_right_string]
+            result = self.remove_trailing_str("<br>", result)
+            result = self.remove_trailing_str("\n", result)
+        else:
+            return input_string
 
         return result
 
@@ -77,11 +83,14 @@ class Word:
         # remove herkunft
         export_string = self.remove_herkunft(export_string)
 
+        # remove trailing to get equal starting point for examples
+        export_string = self.remove_trailing_str("<br>", export_string)
+
         # add examples
         examples = self.word.examples
         examples = self.hide_word_in_text(examples)
         if examples:
-            export_string += "<br>Beispiel<br>"
+            export_string += "<br><br>Beispiel<br>"
             export_string += examples.replace("\n", "<br>")
 
         # remove tabs in meaning in order to not confuse anki

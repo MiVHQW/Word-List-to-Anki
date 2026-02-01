@@ -52,7 +52,7 @@ class WordFactory:
 
             except:
                 print(self.word_string_to_word_object(word_string).word_string, ": failed", sep="")
-                self.error_words += (self.word_string_to_word_object(word_string).word_string + "\n")
+                self.error_words += self.word_string_to_word_object(word_string).word_string
 
     def create_word_list(self):
         """Creates the Anki output file
